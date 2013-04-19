@@ -56,7 +56,7 @@ public class TokenExtractor extends BaseBasicBolt {
 		}
 		catch(IOException e) {
 			// not thrown b/c we're using a string reader...
-			throw new RuntimeException(e);
+//			throw new RuntimeException(e);
 		}
 
 		return result;
