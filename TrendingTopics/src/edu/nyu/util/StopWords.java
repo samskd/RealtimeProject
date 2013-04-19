@@ -3,24 +3,30 @@ package edu.nyu.util;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.lucene.analysis.util.CharArraySet;
+import org.apache.lucene.util.Version;
+
 public class StopWords {
 
 	private static Set<String> stopWords = null;
-
-	public static boolean isStopWord(String word){
-		if(stopWords == null)
-			populateStopWords();
-
-		//checks if its just a number or 
-		return word.matches("\\d+") || stopWords.contains(word);
-	}
+	private static CharArraySet stopWordsCharArraySet = null;
+	
+//	public static boolean isStopWord(String word){
+//		if(stopWords == null)
+//			populateStopWords();
+//
+//		//checks if its just a number or 
+//		return word.matches("\\d+") || stopWords.contains(word);
+//	}
 	
 	
-	public static Set<String> getStopWordSet(){
-		if(stopWords == null)
+	public static CharArraySet getStopWordSet(){
+		if(stopWordsCharArraySet == null){
 			populateStopWords();
+			stopWordsCharArraySet = new CharArraySet(Version.LUCENE_42, stopWords, true);
+		}
 
-		return stopWords;
+		return stopWordsCharArraySet;
 	}
 
 

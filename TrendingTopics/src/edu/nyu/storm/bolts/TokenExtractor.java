@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.StopAnalyzer;
 import org.apache.lucene.analysis.TokenStream;
+import org.apache.lucene.analysis.en.EnglishAnalyzer;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.util.Version;
 
@@ -46,17 +46,17 @@ public class TokenExtractor extends BaseBasicBolt {
     private List<String> parseKeywords(String tweetText) {
 
 		List<String> result = new ArrayList<String>();
-		analyzer = new StopAnalyzer(Version.LUCENE_36, StopWords.getStopWordSet());
+		analyzer = new EnglishAnalyzer(Version.LUCENE_42, StopWords.getStopWordSet());
 		
-		TokenStream stream  = analyzer.tokenStream(null, new StringReader(tweetText));
-
 		try {
+			TokenStream stream  = analyzer.tokenStream(null, new StringReader(tweetText));
 			while(stream.incrementToken()) {
 				result.add(stream.getAttribute(CharTermAttribute.class).toString());
 			}
 		}
 		catch(IOException e) {
 			// not thrown b/c we're using a string reader...
+			throw new RuntimeException(e);
 		}
 
 		return result;

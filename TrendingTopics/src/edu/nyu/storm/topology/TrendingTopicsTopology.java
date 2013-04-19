@@ -22,7 +22,9 @@ import edu.nyu.storm.spouts.TwitterSpout;
 public class TrendingTopicsTopology {
    
     public static class WordCount extends BaseBasicBolt {
-        Map<String, Integer> counts = new HashMap<String, Integer>();
+       
+    	private static final long serialVersionUID = 1363429619041558088L;
+		Map<String, Integer> counts = new HashMap<String, Integer>();
 
         @Override
         public void execute(Tuple tuple, BasicOutputCollector collector) {
