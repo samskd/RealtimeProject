@@ -1,16 +1,12 @@
 package edu.nyu.storm.bolts;
 
 
-import java.io.IOException;
-import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.TokenStream;
-import org.apache.lucene.analysis.en.EnglishAnalyzer;
-import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
-import org.apache.lucene.util.Version;
+
+import edu.nyu.util.Tokenizer;
 
 import twitter4j.Status;
 import backtype.storm.topology.BasicOutputCollector;
@@ -18,7 +14,6 @@ import backtype.storm.topology.OutputFieldsDeclarer;
 import backtype.storm.topology.base.BaseBasicBolt;
 import backtype.storm.tuple.Fields;
 import backtype.storm.tuple.Tuple;
-import edu.nyu.util.StopWords;
 
 public class TokenExtractor extends BaseBasicBolt {
 
@@ -45,21 +40,33 @@ public class TokenExtractor extends BaseBasicBolt {
     
     private List<String> parseKeywords(String tweetText) {
 
-		List<String> result = new ArrayList<String>();
-		analyzer = new EnglishAnalyzer(Version.LUCENE_42, StopWords.getStopWordSet());
-		
-		try {
-			TokenStream stream  = analyzer.tokenStream(null, new StringReader(tweetText));
-			while(stream.incrementToken()) {
-				result.add(stream.getAttribute(CharTermAttribute.class).toString());
-			}
-		}
-		catch(IOException e) {
-			// not thrown b/c we're using a string reader...
+//		List<String> result = new ArrayList<String>();
+//		analyzer = new EnglishAnalyzer(Version.LUCENE_42, StopWords.getStopWordSet());
+//
+//		try {
+//			TokenStream stream  = analyzer.tokenStream(null, new StringReader(tweetText));
+//			TokenStreamComponents createComponents = analyzer.createComponents(null, new StringReader(tweetText));
+//			
+//			try{
+//			System.out.println(stream.incrementToken());
+//			}catch(Exception e){
+//				System.err.println("Erro");
+//			}
+//			while(stream.incrementToken()) {
+//				String term = stream.getAttribute(CharTermAttribute.class).toString();
+//				System.out.print(term+", ");
+//				result.add(term);
+//			}
+//			
+//		}
+//		catch(IOException e) {
+//			// not thrown b/c we're using a string reader...
 //			throw new RuntimeException(e);
-		}
-
-		return result;
+//		}
+//
+//		System.out.println("\n\n\n");
+//		return result;
+    	return Tokenizer.tokenize(tweetText);
 	}  
 
 }
