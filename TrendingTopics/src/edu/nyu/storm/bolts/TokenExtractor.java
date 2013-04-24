@@ -28,7 +28,6 @@ public class TokenExtractor extends BaseBasicBolt {
 			
 		List<Object> outputTuple = new ArrayList<Object>();
 		outputTuple.add(tweets);
-		
 		collector.emit(outputTuple);
     }
 
