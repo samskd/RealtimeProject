@@ -1,7 +1,6 @@
 package edu.nyu.storm.bolts;
 
 
-import java.util.ArrayList;
 import java.util.List;
 
 import twitter4j.Status;
@@ -10,6 +9,7 @@ import backtype.storm.topology.OutputFieldsDeclarer;
 import backtype.storm.topology.base.BaseBasicBolt;
 import backtype.storm.tuple.Fields;
 import backtype.storm.tuple.Tuple;
+import backtype.storm.tuple.Values;
 import edu.nyu.util.Tokenizer;
 
 /**
@@ -24,16 +24,15 @@ public class TokenExtractor extends BaseBasicBolt {
     public void execute(Tuple tuple, BasicOutputCollector collector) {
 		Status tweet = (Status) tuple.getValueByField("tweet");
 		
-		List<String> tweets = parseKeywords(tweet.getText());
-			
-		List<Object> outputTuple = new ArrayList<Object>();
-		outputTuple.add(tweets);
-		collector.emit(outputTuple);
+		List<String> tweetTokens = parseKeywords(tweet.getText());
+		for(String token : tweetTokens)	{
+			collector.emit(new Values(token));
+		}
     }
 
     @Override
     public void declareOutputFields(OutputFieldsDeclarer ofd) {
-    	ofd.declare(new Fields("tweetTokens"));
+    	ofd.declare(new Fields("tweetToken"));
     }
     
     private List<String> parseKeywords(String tweetText) {

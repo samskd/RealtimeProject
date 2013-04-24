@@ -1,15 +1,12 @@
 package edu.nyu.storm.bolts;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import edu.nyu.util.NoiseWords;
-
 import backtype.storm.topology.BasicOutputCollector;
 import backtype.storm.topology.OutputFieldsDeclarer;
 import backtype.storm.topology.base.BaseBasicBolt;
 import backtype.storm.tuple.Fields;
 import backtype.storm.tuple.Tuple;
+import backtype.storm.tuple.Values;
+import edu.nyu.util.NoiseWords;
 
 public class ExtractNoiseWords extends BaseBasicBolt{
 
@@ -22,19 +19,11 @@ public class ExtractNoiseWords extends BaseBasicBolt{
 
 	@Override
 	public void execute(Tuple tuple, BasicOutputCollector collector) {
-		@SuppressWarnings("unchecked")
-		List<String> tweetTokens = (List<String>) tuple.getValueByField("tweetTokens");
-		
-		List<String> filteredTokens = new ArrayList<String>();
-		
-		for(String token : tweetTokens){
-			if(!NoiseWords.isNoiseWord(token))
-				filteredTokens.add(token);
-		}
+
+		String tweetToken = (String) tuple.getValueByField("tweetToken");
 			
-		List<Object> outputTuple = new ArrayList<Object>();
-		outputTuple.add(filteredTokens);
-		collector.emit(outputTuple);
+		if(!NoiseWords.isNoiseWord(tweetToken)) 
+			collector.emit(new Values(tweetToken));
 	}
 
 }

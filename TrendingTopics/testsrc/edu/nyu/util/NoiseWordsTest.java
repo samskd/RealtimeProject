@@ -8,10 +8,12 @@ public class NoiseWordsTest {
 	@Test
 	public void test() {
 
-		String word = "???";
 		Assert.assertFalse(NoiseWords.isNoiseWord("samit"));
-		Assert.assertTrue(NoiseWords.isNoiseWord(word));
-
+		Assert.assertTrue(NoiseWords.isNoiseWord("?"));
+		Assert.assertTrue(NoiseWords.isNoiseWord("??"));
+		Assert.assertTrue(NoiseWords.isNoiseWord("???"));
+		Assert.assertTrue(NoiseWords.isNoiseWord("123345"));
+		Assert.assertFalse(NoiseWords.isNoiseWord("ksdj134bf"));
 	}
 
 }
