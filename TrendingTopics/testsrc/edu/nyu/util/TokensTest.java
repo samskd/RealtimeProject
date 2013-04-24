@@ -1,8 +1,8 @@
 package edu.nyu.util;
 
-import static org.junit.Assert.*;
-
 import java.util.List;
+
+import junit.framework.Assert;
 
 import org.junit.Test;
 
@@ -12,14 +12,14 @@ public class TokensTest {
 	public void test() {
 		try{
 			String text = "Hello how are you Samit";
-			
+
 			List<String> tokens = Tokenizer.tokenize(text);
-			
 			System.out.println(tokens);
-			
-			}catch(Exception e){
-				e.printStackTrace();
-			}
+			Assert.assertEquals(1, tokens.size()); //[samit]
+
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 
 }

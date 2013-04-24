@@ -571,5 +571,8 @@ public class StopWords {
 		stopWords.add("yourselves");
 		stopWords.add("z");
 		stopWords.add("zero");
+		
+		//Twitter specific stopwords
+		stopWords.add("rt");
 	}
 }
