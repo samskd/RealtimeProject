@@ -12,18 +12,22 @@ public class ExtractNoiseWords extends BaseBasicBolt{
 
 	private static final long serialVersionUID = 5078004842335973173L;
 
-	@Override
-	public void declareOutputFields(OutputFieldsDeclarer ofd) {
-		ofd.declare(new Fields("filteredTokens"));
-	}
-
+	
 	@Override
 	public void execute(Tuple tuple, BasicOutputCollector collector) {
 
 		String tweetToken = (String) tuple.getValueByField("tweetToken");
-			
-		if(!NoiseWords.isNoiseWord(tweetToken)) 
+		
+		System.out.print(tweetToken+"-->");	
+		if(!NoiseWords.isNoiseWord(tweetToken)) {
+			System.out.println("Emitted");
 			collector.emit(new Values(tweetToken));
+		}
+	}
+
+	@Override
+	public void declareOutputFields(OutputFieldsDeclarer ofd) {
+		ofd.declare(new Fields("filteredToken"));
 	}
 
 }

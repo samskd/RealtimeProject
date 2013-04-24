@@ -15,7 +15,7 @@ public class NoiseWords {
 	 * @param word Word to be checked.
 	 * @return Returns <code>True</code> if the word is noise, otherwise <code>False</code>.
 	 * */
-	public static boolean isNoiseWord(String word){
+	public static synchronized boolean isNoiseWord(String word){
 		return word.matches(noiseRegex);
 	}
 	
