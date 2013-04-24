@@ -6,12 +6,11 @@ import backtype.storm.topology.base.BaseBasicBolt;
 import backtype.storm.tuple.Fields;
 import backtype.storm.tuple.Tuple;
 import backtype.storm.tuple.Values;
-import edu.nyu.util.NoiseWords;
 
 public class ExtractNoiseWords extends BaseBasicBolt{
 
 	private static final long serialVersionUID = 5078004842335973173L;
-
+	private static String noiseRegex = "(\\d+|\\?+)";
 	
 	@Override
 	public void execute(Tuple tuple, BasicOutputCollector collector) {
@@ -19,7 +18,7 @@ public class ExtractNoiseWords extends BaseBasicBolt{
 		String tweetToken = (String) tuple.getValueByField("tweetToken");
 		
 		System.out.print(tweetToken+"-->");	
-		if(!NoiseWords.isNoiseWord(tweetToken)) {
+		if(!tweetToken.matches(noiseRegex)) {
 			System.out.println("Emitted");
 			collector.emit(new Values(tweetToken));
 		}
