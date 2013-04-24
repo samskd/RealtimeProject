@@ -13,7 +13,7 @@ import backtype.storm.topology.base.BaseBasicBolt;
 import backtype.storm.tuple.Fields;
 import backtype.storm.tuple.Tuple;
 import backtype.storm.tuple.Values;
-import edu.nyu.storm.bolts.ExtractWords;
+import edu.nyu.storm.bolts.ExtractNoiseWords;
 import edu.nyu.storm.spouts.TwitterSpout;
 
 /**
@@ -48,7 +48,7 @@ public class TrendingTopicsTopology {
         
         builder.setSpout("spout", new TwitterSpout(), 5);
         
-        builder.setBolt("split", new ExtractWords(), 8)
+        builder.setBolt("split", new ExtractNoiseWords(), 8)
                  .shuffleGrouping("spout");
         builder.setBolt("count", new WordCount(), 12)
                  .fieldsGrouping("split", new Fields("word"));

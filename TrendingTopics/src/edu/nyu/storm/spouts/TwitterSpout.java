@@ -27,7 +27,7 @@ public class TwitterSpout extends BaseRichSpout {
     LinkedBlockingQueue<Status> queue = null;
     TwitterStream _twitterStream;
     
-    
+    @SuppressWarnings("rawtypes")
     @Override
     public void open(Map conf, TopologyContext context, SpoutOutputCollector collector) {
         queue = new LinkedBlockingQueue<Status>(1000);

@@ -8,12 +8,10 @@ import backtype.storm.Config;
 import backtype.storm.LocalCluster;
 import backtype.storm.topology.TopologyBuilder;
 import backtype.storm.utils.Utils;
-import edu.nyu.storm.bolts.TokenExtractor;
+import edu.nyu.storm.bolts.ExtractNoiseWords;
 import edu.nyu.storm.bolts.PrinterBolt;
-import edu.nyu.storm.bolts.WordCounter;
-import edu.nyu.storm.bolts.WordNormalizer;
+import edu.nyu.storm.bolts.TokenExtractor;
 import edu.nyu.storm.spouts.TwitterSpout;
-import backtype.storm.tuple.Fields;
 
 public class PrintStream {        
     public static void main(String[] args) {
@@ -23,21 +21,21 @@ public class PrintStream {
         builder.setSpout("spout", new TwitterSpout());
         builder.setBolt("tokenExtractor", new TokenExtractor())
         	.shuffleGrouping("spout");
-//        builder.setBolt("tokenStemmer", new TokenExtractor())
-//    		.shuffleGrouping("tokenExtractor");
-        builder.setBolt("word-normalizer", new WordNormalizer())
-			.shuffleGrouping("tokenExtractor");
-        builder.setBolt("word-counter", new WordCounter(),1)
-		.fieldsGrouping("word-normalizer", new Fields("word"));
-    //    builder.setBolt("print", new PrinterBolt())
-    //    	.shuffleGrouping("tokenExtractor");
+        builder.setBolt("noiseFilter", new ExtractNoiseWords())
+    	.shuffleGrouping("tokenExtractor");
+//        builder.setBolt("word-normalizer", new WordNormalizer())
+//			.shuffleGrouping("tokenExtractor");
+//        builder.setBolt("word-counter", new WordCounter(),1)
+//		.fieldsGrouping("word-normalizer", new Fields("word"));
+        builder.setBolt("print", new PrinterBolt())
+        	.shuffleGrouping("noiseFilter");
                 
         
         Config conf = new Config();
         
         LocalCluster cluster = new LocalCluster();
         
-        cluster.submitTopology("test", conf, builder.createTopology());
+        cluster.submitTopology("tredingTopics", conf, builder.createTopology());
         
         Utils.sleep(10000);
         cluster.shutdown();
