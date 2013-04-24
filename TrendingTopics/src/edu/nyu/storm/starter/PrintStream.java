@@ -19,12 +19,12 @@ public class PrintStream {
     	TopologyBuilder builder = new TopologyBuilder();
         
         builder.setSpout("spout", new TwitterSpout());
-        builder.setBolt("tokenExtractor", new TokenExtractor())
-        	.shuffleGrouping("spout");
-        builder.setBolt("tokenStemmer", new TokenExtractor())
-    	.shuffleGrouping("tokenExtractor");
+//        builder.setBolt("tokenExtractor", new TokenExtractor())
+//        	.shuffleGrouping("spout");
+//        builder.setBolt("tokenStemmer", new TokenExtractor())
+//    	.shuffleGrouping("tokenExtractor");
         builder.setBolt("print", new PrinterBolt())
-                .shuffleGrouping("tokenStemmer");
+                .shuffleGrouping("spout");
                 
         
         Config conf = new Config();
