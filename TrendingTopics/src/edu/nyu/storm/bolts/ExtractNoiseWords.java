@@ -10,18 +10,16 @@ import backtype.storm.tuple.Values;
 public class ExtractNoiseWords extends BaseBasicBolt{
 
 	private static final long serialVersionUID = 5078004842335973173L;
-	private static String noiseRegex = "(\\d+|\\?+)";
+	private static String noiseRegex = "\\W+";
 	
 	@Override
 	public void execute(Tuple tuple, BasicOutputCollector collector) {
 
 		String tweetToken = (String) tuple.getValueByField("tweetToken");
 		
-		System.out.print(tweetToken+"-->");	
-		if(!tweetToken.matches(noiseRegex)) {
-			System.out.println("Emitted");
+		if(!tweetToken.matches(noiseRegex)) 
 			collector.emit(new Values(tweetToken));
-		}
+		
 	}
 
 	@Override
