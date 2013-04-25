@@ -12,6 +12,8 @@ import edu.nyu.storm.bolts.ExtractNoiseWords;
 import edu.nyu.storm.bolts.PrinterBolt;
 import edu.nyu.storm.bolts.TokenExtractor;
 import edu.nyu.storm.spouts.TwitterSpout;
+import backtype.storm.tuple.Fields;
+import edu.nyu.storm.bolts.WordCounter;
 
 public class PrintStream {        
     public static void main(String[] args) {
@@ -23,10 +25,10 @@ public class PrintStream {
         	.shuffleGrouping("spout");
         builder.setBolt("noiseFilter", new ExtractNoiseWords())
     	.shuffleGrouping("tokenExtractor");
-//        builder.setBolt("wordCounter", new WordCounter(),1)
-//		.fieldsGrouping("noiseFilter", new Fields("filteredToken")); 
-        builder.setBolt("print", new PrinterBolt())
-    	.shuffleGrouping("noiseFilter");
+        builder.setBolt("wordCounter", new WordCounter(),1)
+		.fieldsGrouping("noiseFilter", new Fields("filteredToken")); 
+//        builder.setBolt("print", new PrinterBolt())
+ //   	.shuffleGrouping("noiseFilter");
 	
         
         Config conf = new Config();
