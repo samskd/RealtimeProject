@@ -7,16 +7,16 @@ package edu.nyu.storm.starter;
 import backtype.storm.Config;
 import backtype.storm.LocalCluster;
 import backtype.storm.topology.TopologyBuilder;
+import backtype.storm.tuple.Fields;
 import backtype.storm.utils.Utils;
 import edu.nyu.storm.bolts.ExtractNoiseWords;
-import edu.nyu.storm.bolts.PrinterBolt;
 import edu.nyu.storm.bolts.TokenExtractor;
-import edu.nyu.storm.spouts.TwitterSpout;
-import backtype.storm.tuple.Fields;
 import edu.nyu.storm.bolts.WordCounter;
+import edu.nyu.storm.spouts.TwitterSpout;
 
 public class PrintStream {        
-    public static void main(String[] args) {
+
+	public static void main(String[] args) {
         
     	TopologyBuilder builder = new TopologyBuilder();
         

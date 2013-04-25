@@ -15,7 +15,7 @@ public class ExtractNoiseWords extends BaseBasicBolt{
 	@Override
 	public void execute(Tuple tuple, BasicOutputCollector collector) {
 
-		String tweetToken = (String) tuple.getValueByField("tweetToken");
+		String tweetToken = tuple.getStringByField("tweetToken");
 		
 		if(!tweetToken.matches(noiseRegex)) 
 			collector.emit(new Values(tweetToken));

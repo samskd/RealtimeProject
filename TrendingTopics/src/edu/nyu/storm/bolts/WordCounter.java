@@ -11,7 +11,9 @@ import backtype.storm.tuple.Tuple;
 
 public class WordCounter extends BaseBasicBolt {
 
-	Integer id;
+	private static final long serialVersionUID = 1786534081785862087L;
+	
+	int id;
 	String name;
 	Map<String, Integer> counters;
 
@@ -51,7 +53,7 @@ public class WordCounter extends BaseBasicBolt {
 		if(!counters.containsKey(str)){
 			counters.put(str, 1);
 		}else{
-			Integer c = counters.get(str) + 1;
+			int c = counters.get(str) + 1;
 			counters.put(str, c);
 		}
 	}
