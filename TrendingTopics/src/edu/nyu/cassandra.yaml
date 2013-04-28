@@ -1,0 +1,7 @@
+keyspace:
+	- name:MyKeyspace
+	replica_placement_strategy: org.apache.cassandra.locator.RackUnawareStrategy
+	replication factor: 1
+	column_families:
+	- name: WordCount
+	compare_with:UTF8Type
