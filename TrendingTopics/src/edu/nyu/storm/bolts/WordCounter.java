@@ -87,18 +87,19 @@ public class WordCounter extends BaseBasicBolt {
 		 byte[] userIDKey = str.getBytes();
 		 
 		ColumnPath path = new ColumnPath(ColumnFamily);
-		path.setColumn("count".getBytes(UTF8));
+		path.setColumn(ByteBuffer.wrap("count".getBytes(UTF8)));
 		
+		ColumnOrSuperColumn cos = client.get(ByteBuffer.wrap(userIDKey), path, CL);
 		ColumnParent cp = new ColumnParent(ColumnFamily);
-		
-		ColumnOrSuperColumn cos = client.get(userIDKey, path, CL);
-			
 		if(cos==null){
-			client.insert(userIDKey, cp, new Column("count".getBytes(UTF8),"1".getBytes(),System.currentTimeMillis()), CL);
+			Column c1 = new Column(ByteBuffer.wrap("count".getBytes(UTF8)), ByteBuffer.wrap("1".getBytes(UTF8)), System.currentTimeMillis());
+			client.insert(ByteBuffer.wrap(userIDKey), cp, c1, CL);
 		}else{
 			Column col =cos.column;
 			String count =new String(col.getValue(),UTF8);
 			count+=1;
+			Column c1 = new Column(ByteBuffer.wrap("count".getBytes(UTF8)), ByteBuffer.wrap(count.getBytes(UTF8)), System.currentTimeMillis());
+			client.insert(ByteBuffer.wrap(userIDKey), cp, c1, CL);
 	
 		}
 	}
