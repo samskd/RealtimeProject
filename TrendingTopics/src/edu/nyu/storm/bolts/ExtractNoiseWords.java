@@ -11,7 +11,7 @@ public class ExtractNoiseWords extends BaseBasicBolt{
 
 	private static final long serialVersionUID = 5078004842335973173L;
 	private static String noiseRegex = "(\\W+|\\d+)";
-	private static String englishNaiveRegex = "^[a-zA-Z#]*$";
+	private static String englishNaiveRegex = "^[a-zA-Z#]*$"; 
 	
 	@Override
 	public void execute(Tuple tuple, BasicOutputCollector collector) {
