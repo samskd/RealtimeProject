@@ -1,7 +1,7 @@
 package edu.nyu.storm.bolts;
 
 import static edu.nyu.Constant.CL;
-import static edu.nyu.Constant.UTF8;
+import static edu.nyu.Constant.WORDS_WRITE_BATCH_SIZE;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
@@ -11,6 +11,7 @@ import java.util.Map;
 import org.apache.cassandra.thrift.Cassandra;
 import org.apache.cassandra.thrift.Column;
 import org.apache.cassandra.thrift.ColumnParent;
+import org.apache.cassandra.utils.ByteBufferUtil;
 
 import backtype.storm.task.TopologyContext;
 import backtype.storm.topology.BasicOutputCollector;
@@ -23,7 +24,7 @@ public class WordCounter extends BaseBasicBolt {
 	private static final long serialVersionUID = 5968327715395972088L;
 	private static Cassandra.Client client;
 	private static Connector connector;
-	
+
 	Integer id;
 	String name;
 	Map<String, Integer> counters;
@@ -34,7 +35,7 @@ public class WordCounter extends BaseBasicBolt {
 	 */
 	@Override
 	public void cleanup() {
-	/*	System.out.println("-- Word Counter ["+name+"-"+id+"] --");
+		/*	System.out.println("-- Word Counter ["+name+"-"+id+"] --");
 		for(Map.Entry<String, Integer> entry : counters.entrySet()){
 			System.out.println(entry.getKey()+": "+entry.getValue());
 		}*/
@@ -57,33 +58,32 @@ public class WordCounter extends BaseBasicBolt {
 
 	@Override
 	public void execute(Tuple input, BasicOutputCollector collector) {
-		if(counters.size()>1000){
+		
+		if(counters.size() > WORDS_WRITE_BATCH_SIZE){
 			connector = new Connector();
 			try {
 				client = connector.connect();
 				long timestamp = System.currentTimeMillis();
 				ColumnParent parent = new ColumnParent("wordCount");
 				for(Map.Entry<String, Integer> entry : counters.entrySet()){
-					 Column idColumn;
+					Column idColumn;
 					try {
 						idColumn = new Column(toByteBuffer(entry.getKey()));
 						idColumn.setValue(toByteBuffer(entry.getValue().toString()));
 						idColumn.setTimestamp(timestamp);
-						client.insert(toByteBuffer(timestamp+""), parent, idColumn, CL);
+						client.insert(toByteBuffer(timestamp), parent, idColumn, CL);
 					} catch (Exception e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
 				counters.clear();
 				System.out.println("clear");
 			} catch (Exception e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			
+
 		}
-		
+
 		String str = input.getString(0);
 		/**
 		 * If the word dosn't exist in the map we will create
@@ -92,13 +92,17 @@ public class WordCounter extends BaseBasicBolt {
 		if(!counters.containsKey(str)){
 			counters.put(str, 1);
 		}else{
-			Integer c = counters.get(str) + 1;
+			int c = counters.get(str) + 1;
 			counters.put(str, c);
 		}
 	}
-	
+
 	public static ByteBuffer toByteBuffer(String value) throws UnsupportedEncodingException{
-		 return ByteBuffer.wrap(value.getBytes(UTF8));
+		return ByteBufferUtil.bytes(value);
+//		return ByteBuffer.wrap(value.getBytes(UTF8));
 	}
-	
+
+	public static ByteBuffer toByteBuffer(long value) throws UnsupportedEncodingException{
+		return ByteBufferUtil.bytes(value);
+	}
 }
