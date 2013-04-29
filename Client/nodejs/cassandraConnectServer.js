@@ -9,6 +9,7 @@ setupConnection();
 http.createServer(function (req, res) {
   	
   	var now = Math.round(new Date().getTime() / 1000);
+  	//var now = 1367199547;
   	var tenMinutesAgo = now - 600;
   	
   	console.log(tenMinutesAgo+"->"+now);
