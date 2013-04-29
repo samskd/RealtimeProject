@@ -3,18 +3,17 @@ var cassandraPort = 9160;
 var keyspace = "TrendingTopics";
 var http = require('http');
 var con;
+var timeDifference = 600000 //10 minutes in milliseconds
 
 setupConnection();
 
 http.createServer(function (req, res) {
   	
-  	var now = Math.round(new Date().getTime() / 1000);
-  	//var now = 1367199547;
-  	var tenMinutesAgo = now - 600;
   	
-  	console.log(tenMinutesAgo+"->"+now);
+  	var now = new Date().getTime();
+  	var tenMinutesAgo = now - timeDifference;
   	
-  	con.execute('SELECT * FROM wordCount WHERE key >= ? AND key <= ?', [tenMinutesAgo, now], function (err, rows) {
+  	con.execute("SELECT * FROM wordCount WHERE key = ?", [1367269924522], function (err, rows) {
     
     if (err) {
         console.log("ERROR: "+err);
