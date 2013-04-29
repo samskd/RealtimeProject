@@ -18,7 +18,7 @@ public class StopWords {
 
 	private static CharArraySet stopWordsCharArraySet = null;
 	private static String stopWordsFile = "files/stopwords";
-	private static boolean useLuceneStopWords = true;
+	private static boolean useLuceneStopWords = false;
 
 	/**
 	 * Checks whether the word is a stopword.

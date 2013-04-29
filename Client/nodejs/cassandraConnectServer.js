@@ -13,7 +13,7 @@ http.createServer(function (req, res) {
   	var now = new Date().getTime();
   	var tenMinutesAgo = now - timeDifference;
   	
-  	con.execute("SELECT * FROM wordCount WHERE key = ?", [1367269924522], function (err, rows) {
+  	con.execute("SELECT * FROM wordCount WHERE key = ?", [now], function (err, rows) {
     
     if (err) {
         console.log("ERROR: "+err);

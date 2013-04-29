@@ -113,7 +113,7 @@ public class WordCounter extends BaseBasicBolt {
 					idColumn.setValue(toByteBuffer(entry.getValue().toString()));
 					idColumn.setTimestamp(timestamp);
 					client.insert(toByteBuffer(timestamp+""), parent, idColumn, CL);
-					System.out.println(entry.getKey()+"->"+entry.getValue());
+//					System.out.println(entry.getKey()+"->"+entry.getValue());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
