@@ -4,6 +4,8 @@ package edu.nyu.storm.starter;
 // uncomment storm.starter.spout.TwitterSampleSpout, and uncomment this class
 
 
+import java.util.Timer;
+
 import backtype.storm.Config;
 import backtype.storm.LocalCluster;
 import backtype.storm.topology.TopologyBuilder;
@@ -17,7 +19,6 @@ import edu.nyu.storm.spouts.TwitterSpout;
 public class PrintStream {        
 
 	public static void main(String[] args) {
-        
     	TopologyBuilder builder = new TopologyBuilder();
         
         builder.setSpout("spout", new TwitterSpout());
@@ -25,7 +26,8 @@ public class PrintStream {
         	.shuffleGrouping("spout");
         builder.setBolt("noiseFilter", new ExtractNoiseWords())
     	.shuffleGrouping("tokenExtractor");
-        builder.setBolt("wordCounter", new WordCounter(),1)
+        WordCounter count = new WordCounter();
+        builder.setBolt("wordCounter", count,1)
 		.fieldsGrouping("noiseFilter", new Fields("filteredToken")); 
 //        builder.setBolt("print", new PrinterBolt())
  //   	.shuffleGrouping("noiseFilter");
@@ -36,8 +38,9 @@ public class PrintStream {
         LocalCluster cluster = new LocalCluster();
         
         cluster.submitTopology("tredingTopics", conf, builder.createTopology());
-        
-        Utils.sleep(10000);
-        cluster.shutdown();
+       
+  
+    /*    Utils.sleep(10000);
+        cluster.shutdown();*/
     }
 }
