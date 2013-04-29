@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
 
+import org.apache.lucene.analysis.core.StopAnalyzer;
 import org.apache.lucene.analysis.util.CharArraySet;
 import org.apache.lucene.util.Version;
 
@@ -15,9 +16,9 @@ import org.apache.lucene.util.Version;
  * */
 public class StopWords {
 
-	private static Set<String> stopWords = null;
 	private static CharArraySet stopWordsCharArraySet = null;
 	private static String stopWordsFile = "files/stopwords";
+	private static boolean useLuceneStopWords = true;
 
 	/**
 	 * Checks whether the word is a stopword.
@@ -34,26 +35,30 @@ public class StopWords {
 	}
 
 	/**
-	 * Returns the set contianing all the stopwords.
+	 * Returns the set containing all the stopwords.
 	 * 
 	 * @return Set of stopwords.
 	 * */
 	public static CharArraySet getStopWordSet(){
-		if(stopWordsCharArraySet == null){
+		
+		if(stopWordsCharArraySet == null)
 			populateStopWords();
-			stopWordsCharArraySet = new CharArraySet(Version.LUCENE_42, stopWords, true);
-		}
 
 		return stopWordsCharArraySet;
 	}
 
 
 	/**
-	 * Private method that lazyly populates the stopwords from the file.
+	 * Private method that lazily populates the stopwords from the file.
 	 * */
 	private static void populateStopWords(){
 
-		stopWords = new HashSet<String>();
+		if(useLuceneStopWords){
+			stopWordsCharArraySet = StopAnalyzer.ENGLISH_STOP_WORDS_SET;
+			return;
+		}
+		
+		Set<String> stopWords = new HashSet<String>();
 
 		Scanner scanner = null;
 		FileReader fileReader = null;
@@ -81,5 +86,7 @@ public class StopWords {
 				e.printStackTrace();
 			}
 		}
+		
+		stopWordsCharArraySet = new CharArraySet(Version.LUCENE_42, stopWords, true);
 	}
 }
