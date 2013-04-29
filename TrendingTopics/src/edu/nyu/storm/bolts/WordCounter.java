@@ -1,6 +1,7 @@
 package edu.nyu.storm.bolts;
 
 import static edu.nyu.Constant.CL;
+import static edu.nyu.Constant.UTF8;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
@@ -80,6 +81,7 @@ public class WordCounter extends BaseBasicBolt {
 					}
 				}
 				counters.clear();
+				System.out.println("clear");
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -101,7 +103,7 @@ public class WordCounter extends BaseBasicBolt {
 	}
 	
 	public static ByteBuffer toByteBuffer(String value) throws UnsupportedEncodingException{
-		 return ByteBuffer.wrap(value.getBytes("UTF-8"));
+		 return ByteBuffer.wrap(value.getBytes(UTF8));
 	}
 	
 }
