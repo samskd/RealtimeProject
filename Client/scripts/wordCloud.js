@@ -1,6 +1,6 @@
 $(document).ready(function(){
 		
-		$("#wordcloud").awesomeCloud({
+		$("#wordCountCloud").awesomeCloud({
 					"size" : {
 						"grid" : 9, // word spacing, smaller is more tightly packed
 						"factor" : 0, // font resize factor, 0 means automatic
@@ -13,7 +13,7 @@ $(document).ready(function(){
 					},
 					"options" : {
 						"color" : "random-dark",  // default = "gradient" if "random-light" or "random-dark", color.start and color.end are ignored
-						"rotationRatio" : 0.35, // 0 is all horizontal, 1 is all vertical
+						"rotationRatio" : 0.5, // 0 is all horizontal, 1 is all vertical
 						"printMultiplier" : 1, // set to 3 for nice printer output; higher numbers take longer
 						"sort" : "highest" // "highest" to show big words first, "lowest" to do small words first, "random" to not care				
 					},
@@ -21,6 +21,6 @@ $(document).ready(function(){
 					"shape" : "circle" // the selected shape keyword, or a theta function describing a shape
 				});
 				
-	setInterval('window.location.reload()', 10000);
+	//setInterval('window.location.reload()', 10000);
 				
 });
