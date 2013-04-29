@@ -58,7 +58,11 @@ public class WordCounter extends BaseBasicBolt {
 
 	@Override
 	public void execute(Tuple input, BasicOutputCollector collector) {
+<<<<<<< HEAD
 		
+=======
+
+>>>>>>> download
 		if(counters.size() > WORDS_WRITE_BATCH_SIZE){
 			connector = new Connector();
 			try {
@@ -105,5 +109,8 @@ public class WordCounter extends BaseBasicBolt {
 	public static ByteBuffer toByteBuffer(long value) throws UnsupportedEncodingException{
 		return ByteBufferUtil.bytes(value);
 	}
+<<<<<<< HEAD
 }
-
+=======
+}
+>>>>>>> download
