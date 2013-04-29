@@ -11,22 +11,16 @@ import java.util.Map;
 import org.apache.cassandra.thrift.Cassandra;
 import org.apache.cassandra.thrift.Column;
 import org.apache.cassandra.thrift.ColumnParent;
-import org.apache.cassandra.thrift.InvalidRequestException;
-import org.apache.cassandra.thrift.TimedOutException;
-import org.apache.cassandra.thrift.UnavailableException;
-import org.apache.log4j.Logger;
-import org.apache.thrift.TException;
-
-import edu.nyu.Connector;
 
 import backtype.storm.task.TopologyContext;
 import backtype.storm.topology.BasicOutputCollector;
 import backtype.storm.topology.OutputFieldsDeclarer;
 import backtype.storm.topology.base.BaseBasicBolt;
 import backtype.storm.tuple.Tuple;
+import edu.nyu.Connector;
 
 public class WordCounter extends BaseBasicBolt {
-	private static final Logger LOG = Logger.getLogger(CopyOfWordCounter.class);
+	private static final long serialVersionUID = 5968327715395972088L;
 	private static Cassandra.Client client;
 	private static Connector connector;
 	
@@ -49,6 +43,7 @@ public class WordCounter extends BaseBasicBolt {
 	/**
 	 * On create 
 	 */
+	@SuppressWarnings("rawtypes")
 	@Override
 	public void prepare(Map stormConf, TopologyContext context) {
 		this.counters = new HashMap<String, Integer>();

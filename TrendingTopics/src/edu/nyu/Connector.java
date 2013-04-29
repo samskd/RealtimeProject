@@ -1,17 +1,17 @@
 package edu.nyu;
 
+import static edu.nyu.Constant.HOST;
+import static edu.nyu.Constant.KEYSPACE;
+import static edu.nyu.Constant.PORT;
+
 import org.apache.cassandra.thrift.Cassandra;
-import org.apache.cassandra.thrift.ColumnPath;
 import org.apache.cassandra.thrift.InvalidRequestException;
 import org.apache.thrift.TException;
-import org.apache.thrift.protocol.TProtocol;
 import org.apache.thrift.protocol.TBinaryProtocol;
+import org.apache.thrift.protocol.TProtocol;
 import org.apache.thrift.transport.TFramedTransport;
 import org.apache.thrift.transport.TSocket;
 import org.apache.thrift.transport.TTransport;
-import static edu.nyu.Constant.KEYSPACE;
-import static edu.nyu.Constant.HOST;
-import static edu.nyu.Constant.PORT;
 
 public class Connector {
 	

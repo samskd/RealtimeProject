@@ -1,7 +1,5 @@
 package edu.nyu;
 
-import java.util.Map;
-
 import org.apache.cassandra.thrift.ConsistencyLevel;
 
 public class Constant {

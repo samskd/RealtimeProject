@@ -4,13 +4,10 @@ package edu.nyu.storm.starter;
 // uncomment storm.starter.spout.TwitterSampleSpout, and uncomment this class
 
 
-import java.util.Timer;
-
 import backtype.storm.Config;
 import backtype.storm.LocalCluster;
 import backtype.storm.topology.TopologyBuilder;
 import backtype.storm.tuple.Fields;
-import backtype.storm.utils.Utils;
 import edu.nyu.storm.bolts.ExtractNoiseWords;
 import edu.nyu.storm.bolts.TokenExtractor;
 import edu.nyu.storm.bolts.WordCounter;
