@@ -8,7 +8,12 @@ setupConnection();
 
 http.createServer(function (req, res) {
   	
-  	con.execute('SELECT * FROM wordCount WHERE key >= ? and key <= ?', [12345677, 12345678], function (err, rows) {
+  	var now = Math.round(new Date().getTime() / 1000);
+  	var tenMinutesAgo = now - 600;
+  	
+  	console.log(tenMinutesAgo+"->"+now);
+  	
+  	con.execute('SELECT * FROM wordCount WHERE key >= ? AND key <= ?', [tenMinutesAgo, now], function (err, rows) {
     
     if (err) {
         console.log("ERROR: "+err);
@@ -19,11 +24,6 @@ http.createServer(function (req, res) {
         var response = {};
         for(i=0; i<rows.rowCount(); i++){
         	response[rows[i].key] = rows[i].colHash;
-        	/*for(j=0; j<rows[i].cols.length;j++){
-        		var word = rows[i].cols[j].name;
-        		var count = rows[i].cols[j].value;
-        		response = response + "<span data-weight="+count+">"+word+"</span>";
-        	}*/
         }
         response = JSON.stringify(response);
         console.log("Response: "+response);
