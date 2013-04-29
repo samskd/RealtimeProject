@@ -21,7 +21,11 @@ import backtype.storm.tuple.Tuple;
 import edu.nyu.Connector;
 
 public class WordCounter extends BaseBasicBolt {
+<<<<<<< HEAD
 	private static final long serialVersionUID = 5968327715395972088L;
+=======
+	private static final Logger LOG = Logger.getLogger(WordCounter.class);
+>>>>>>> change wordcount
 	private static Cassandra.Client client;
 	private static Connector connector;
 
@@ -77,7 +81,7 @@ public class WordCounter extends BaseBasicBolt {
 					}
 				}
 				counters.clear();
-				System.out.println("clear");
+		//		System.out.println("clear");
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
