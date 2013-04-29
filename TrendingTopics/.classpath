@@ -56,21 +56,21 @@
 	<classpathentry kind="lib" path="lib/lucene-core-4.2.1.jar"/>
 	<classpathentry kind="lib" path="lib/lucene-analyzers-common-4.2.1.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry kind="lib" path="/usr/local/cassandra/lib/antlr-3.2.jar"/>
-	<classpathentry kind="lib" path="/usr/local/cassandra/lib/apache-cassandra-1.0.12.jar"/>
-	<classpathentry kind="lib" path="/usr/local/cassandra/lib/apache-cassandra-clientutil-1.0.12.jar"/>
-	<classpathentry kind="lib" path="/usr/local/cassandra/lib/apache-cassandra-thrift-1.0.12.jar"/>
-	<classpathentry kind="lib" path="/usr/local/cassandra/lib/avro-1.4.0-fixes.jar"/>
-	<classpathentry kind="lib" path="/usr/local/cassandra/lib/avro-1.4.0-sources-fixes.jar"/>
-	<classpathentry kind="lib" path="/usr/local/cassandra/lib/commons-cli-1.1.jar"/>
-	<classpathentry kind="lib" path="/usr/local/cassandra/lib/compress-lzf-0.8.4.jar"/>
-	<classpathentry kind="lib" path="/usr/local/cassandra/lib/concurrentlinkedhashmap-lru-1.2.jar"/>
-	<classpathentry kind="lib" path="/usr/local/cassandra/lib/guava-r08.jar"/>
-	<classpathentry kind="lib" path="/usr/local/cassandra/lib/high-scale-lib-1.1.2.jar"/>
-	<classpathentry kind="lib" path="/usr/local/cassandra/lib/jackson-core-asl-1.4.0.jar"/>
-	<classpathentry kind="lib" path="/usr/local/cassandra/lib/jackson-mapper-asl-1.4.0.jar"/>
-	<classpathentry kind="lib" path="/usr/local/cassandra/lib/jamm-0.2.5.jar"/>
-	<classpathentry kind="lib" path="/usr/local/cassandra/lib/libthrift-0.6.jar"/>
-	<classpathentry kind="lib" path="/usr/local/cassandra/lib/snappy-java-1.0.4.1.jar"/>
+	<classpathentry kind="lib" path="lib/antlr-3.2.jar"/>
+	<classpathentry kind="lib" path="lib/apache-cassandra-1.0.12.jar"/>
+	<classpathentry kind="lib" path="lib/apache-cassandra-clientutil-1.0.12.jar"/>
+	<classpathentry kind="lib" path="lib/apache-cassandra-thrift-1.0.12.jar"/>
+	<classpathentry kind="lib" path="lib/avro-1.4.0-fixes.jar"/>
+	<classpathentry kind="lib" path="lib/avro-1.4.0-sources-fixes.jar"/>
+	<classpathentry kind="lib" path="lib/commons-cli-1.1.jar"/>
+	<classpathentry kind="lib" path="lib/compress-lzf-0.8.4.jar"/>
+	<classpathentry kind="lib" path="lib/concurrentlinkedhashmap-lru-1.2.jar"/>
+	<classpathentry kind="lib" path="lib/guava-r08.jar"/>
+	<classpathentry kind="lib" path="lib/high-scale-lib-1.1.2.jar"/>
+	<classpathentry kind="lib" path="lib/jackson-core-asl-1.4.0.jar"/>
+	<classpathentry kind="lib" path="lib/jackson-mapper-asl-1.4.0.jar"/>
+	<classpathentry kind="lib" path="lib/jamm-0.2.5.jar"/>
+	<classpathentry kind="lib" path="lib/libthrift-0.6.jar"/>
+	<classpathentry kind="lib" path="lib/snappy-java-1.0.4.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
