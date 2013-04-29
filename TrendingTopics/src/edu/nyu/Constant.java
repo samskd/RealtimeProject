@@ -5,7 +5,7 @@ import org.apache.cassandra.thrift.ConsistencyLevel;
 public class Constant {
 	
 		public static final String UTF8 = "UTF8";
-	    public static final String KEYSPACE = "MyKeyspace";
+	    public static final String KEYSPACE = "TrendingTopics";
 	    public static final ConsistencyLevel CL = ConsistencyLevel.ONE;
 		public static final String HOST = "localhost";
 		public static final int PORT = 9160;
