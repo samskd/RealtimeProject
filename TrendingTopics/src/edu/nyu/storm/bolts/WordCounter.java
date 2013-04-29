@@ -1,6 +1,7 @@
 package edu.nyu.storm.bolts;
 
 import static edu.nyu.Constant.CL;
+import static edu.nyu.Constant.UTF8;
 import static edu.nyu.Constant.WORDS_WRITE_BATCH_SIZE;
 
 import java.io.UnsupportedEncodingException;
@@ -21,11 +22,8 @@ import backtype.storm.tuple.Tuple;
 import edu.nyu.Connector;
 
 public class WordCounter extends BaseBasicBolt {
-<<<<<<< HEAD
+
 	private static final long serialVersionUID = 5968327715395972088L;
-=======
-	private static final Logger LOG = Logger.getLogger(WordCounter.class);
->>>>>>> change wordcount
 	private static Cassandra.Client client;
 	private static Connector connector;
 
@@ -75,7 +73,7 @@ public class WordCounter extends BaseBasicBolt {
 						idColumn = new Column(toByteBuffer(entry.getKey()));
 						idColumn.setValue(toByteBuffer(entry.getValue().toString()));
 						idColumn.setTimestamp(timestamp);
-						client.insert(toByteBuffer(timestamp), parent, idColumn, CL);
+						client.insert(toByteBuffer(timestamp+""), parent, idColumn, CL);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -102,11 +100,11 @@ public class WordCounter extends BaseBasicBolt {
 	}
 
 	public static ByteBuffer toByteBuffer(String value) throws UnsupportedEncodingException{
-		return ByteBufferUtil.bytes(value);
-//		return ByteBuffer.wrap(value.getBytes(UTF8));
+//		return ByteBufferUtil.bytes(value);
+		return ByteBuffer.wrap(value.getBytes(UTF8));
 	}
 
-	public static ByteBuffer toByteBuffer(long value) throws UnsupportedEncodingException{
-		return ByteBufferUtil.bytes(value);
-	}
+//	public static ByteBuffer toByteBuffer(long value) throws UnsupportedEncodingException{
+//		return ByteBufferUtil.bytes(value);
+//	}
 }
