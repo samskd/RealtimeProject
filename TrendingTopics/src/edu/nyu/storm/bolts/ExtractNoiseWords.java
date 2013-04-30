@@ -1,5 +1,6 @@
 package edu.nyu.storm.bolts;
 
+import edu.nyu.util.StopWords;
 import backtype.storm.topology.BasicOutputCollector;
 import backtype.storm.topology.OutputFieldsDeclarer;
 import backtype.storm.topology.base.BaseBasicBolt;
@@ -21,7 +22,8 @@ public class ExtractNoiseWords extends BaseBasicBolt{
 		if(tweetToken.length() > 2 && 
 				tweetToken.length() < 15 &&
 				!tweetToken.matches(noiseRegex) && 
-				tweetToken.matches(englishNaiveRegex))
+				tweetToken.matches(englishNaiveRegex) && 
+				StopWords.isStopWord(tweetToken))
 			collector.emit(new Values(tweetToken));
 		
 	}

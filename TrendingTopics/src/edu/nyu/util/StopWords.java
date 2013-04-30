@@ -4,6 +4,8 @@ import java.io.FileReader;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import org.apache.lucene.analysis.core.StopAnalyzer;
 import org.apache.lucene.analysis.util.CharArraySet;
@@ -19,7 +21,8 @@ public class StopWords {
 	private static CharArraySet stopWordsCharArraySet = null;
 	private static String stopWordsFile = "files/stopwords";
 	private static boolean useLuceneStopWords = false;
-
+	private static Lock lock = new ReentrantLock();
+	
 	/**
 	 * Checks whether the word is a stopword.
 	 * 
@@ -30,8 +33,12 @@ public class StopWords {
 	public static boolean isStopWord(String word){
 		if(stopWordsCharArraySet == null)
 			populateStopWords();
-
-		return stopWordsCharArraySet.contains(word);
+		
+		lock.tryLock();
+		boolean contains = stopWordsCharArraySet.contains(word);
+		lock.unlock();
+		
+		return contains;
 	}
 
 	/**
@@ -39,8 +46,7 @@ public class StopWords {
 	 * 
 	 * @return Set of stopwords.
 	 * */
-	public static CharArraySet getStopWordSet(){
-		
+	public static synchronized CharArraySet getStopWordSet(){
 		if(stopWordsCharArraySet == null)
 			populateStopWords();
 
@@ -51,7 +57,7 @@ public class StopWords {
 	/**
 	 * Private method that lazily populates the stopwords from the file.
 	 * */
-	private static void populateStopWords(){
+	private static synchronized void populateStopWords(){
 
 		if(useLuceneStopWords){
 			stopWordsCharArraySet = StopAnalyzer.ENGLISH_STOP_WORDS_SET;
@@ -70,7 +76,6 @@ public class StopWords {
 			//ignores te empty line or the one that starts with '#'
 			while(scanner.hasNextLine()){
 				String word = scanner.nextLine();
-				System.out.println("-->"+word);
 				if(word.isEmpty() || word.startsWith("#")) continue;
 				String[] words = word.trim().split("\\s+");
 				for(String w : words)
