@@ -13,7 +13,11 @@
 	<div role="main">
 		<div id="wordCountCloud" class="wordcloud">
 			<?php
-				$response = file_get_contents("http://localhost:1337/");
+				$window = 1; //1 min default
+				if(isset($_GET['window'])){
+					$window = $_GET['window'];
+				}
+				$response = file_get_contents("http://localhost:1337/?window=$window");
 				
 				if($response){
 					$json = json_decode($response);

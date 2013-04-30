@@ -2,28 +2,35 @@ var cassandraHost = "127.0.0.1";
 var cassandraPort = 9160;
 var keyspace = "TrendingTopics";
 var http = require('http');
+var url = require('url');
 var con;
-var timeDifference = 60000 //1 minutes in milliseconds
+var defaultWindow = 60000 //1 minutes in milliseconds
 
 setupConnection();
 
 http.createServer(function (req, res) {
   	
   	var now = new Date().getTime();
-  	//var now = '1367272703641';
-  	var start = now - timeDifference;
-  	console.log("from = "+start);
+  	var start = now - defaultWindow;
+  	
+	var query = url.parse(req.url, true);
+	var windowLengthInMin = query.window;
+	
+	if(windowLengthInMin != null){
+		start = now - windowLengthInMin*60000;
+	}
+  	
   	
   	con.execute("SELECT * FROM wordCount WHERE key > ?", [start], function (err, rows) {
     
     			if (err) {
         			console.log("ERROR: "+err);
     			} else {
-        			console.log(rows.rowCount());
+        			//console.log(rows.rowCount());
         			
         			var response = {};
         			for(i=0; i<rows.rowCount(); i++){
-        				console.log(rows[i]);
+        				//console.log(rows[i]);
         				response[rows[i].key] = rows[i].colHash;
         			}
         			
