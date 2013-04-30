@@ -1,8 +1,5 @@
 package edu.nyu.storm.starter;
 
-// to use this example, uncomment the twitter4j dependency information in the project.clj,
-// uncomment storm.starter.spout.TwitterSampleSpout, and uncomment this class
-
 
 import backtype.storm.Config;
 import backtype.storm.LocalCluster;

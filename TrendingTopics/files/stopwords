@@ -1,4 +1,4 @@
-# Comments starts with '#'
+#Comments starts with '#'
 #Stopwords list from Rainbow
 0
 1
@@ -538,11 +538,25 @@ yourself
 yourselves
 z
 zero
-
 #Twitter specific stopwords
 rt
 http
 fuck
 follow
 dick
+por
+shit
+wtf
+lol
+loll
+lolll
+haha
+hahaha
+hahahaha
+hahahahaha
+call
+girl
+sex
+today
+bad
 

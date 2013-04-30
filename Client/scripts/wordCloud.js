@@ -21,6 +21,6 @@ $(document).ready(function(){
 					"shape" : "circle" // the selected shape keyword, or a theta function describing a shape
 				});
 				
-	//setInterval('window.location.reload()', 10000);
+	setInterval('window.location.reload()', 600000);
 				
 });

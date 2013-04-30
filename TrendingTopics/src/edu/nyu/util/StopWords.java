@@ -70,6 +70,7 @@ public class StopWords {
 			//ignores te empty line or the one that starts with '#'
 			while(scanner.hasNextLine()){
 				String word = scanner.nextLine();
+				System.out.println("-->"+word);
 				if(word.isEmpty() || word.startsWith("#")) continue;
 				String[] words = word.trim().split("\\s+");
 				for(String w : words)
