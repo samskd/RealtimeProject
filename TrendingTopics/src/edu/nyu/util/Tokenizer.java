@@ -1,6 +1,7 @@
 package edu.nyu.util;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,8 +25,10 @@ import org.apache.lucene.util.Version;
  * 
  * @author samitpatel
  * */
-public class Tokenizer {
+public class Tokenizer implements Serializable{
 
+	private static final long serialVersionUID = 1L;
+	
 	//Analyzer used to build the token stream. and excluding the word in the stopword list.
 	private static final Analyzer analyzer  = new EnglishAnalyzer(Version.LUCENE_42, StopWords.getStopWordSet());
 
