@@ -13,7 +13,7 @@ public class TokensTest {
 		try{
 			String text = "Hello how are you Samit";
 
-			List<String> tokens = Tokenizer.tokenize(text);
+			List<String> tokens = new Tokenizer().tokenize(text);
 			System.out.println(tokens);
 			Assert.assertEquals(1, tokens.size()); //[samit]
 

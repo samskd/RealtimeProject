@@ -19,6 +19,7 @@ import edu.nyu.util.Tokenizer;
 public class TokenExtractor extends BaseBasicBolt {
 
 	private static final long serialVersionUID = 8812885839655720870L;
+	private Tokenizer tokenizer = new Tokenizer();
 	
 	@Override
     public void execute(Tuple tuple, BasicOutputCollector collector) {
@@ -36,7 +37,7 @@ public class TokenExtractor extends BaseBasicBolt {
     }
     
     private List<String> parseKeywords(String tweetText) {
-    	return Tokenizer.tokenize(tweetText);
+    	return tokenizer.tokenize(tweetText);
 	}  
 
 }

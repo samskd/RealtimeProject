@@ -34,7 +34,7 @@ public class Tokenizer {
 	 * @param text Text to tokenize.
 	 * @return Returns the list of tokens.
 	 * */
-	public static List<String> tokenize(String text){
+	public List<String> tokenize(String text){
 		List<String> result = new ArrayList<String>();
 		TokenStream stream  = null;
 		
