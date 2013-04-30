@@ -1,35 +1,21 @@
 package edu.nyu.storm.bolts;
 
-import static edu.nyu.Constant.CL;
-import static edu.nyu.Constant.UTF8;
 import static edu.nyu.Constant.WORDS_WRITE_BATCH_SIZE;
-import static edu.nyu.Constant.TOP_WORDS_COUNT;
 
-import java.io.UnsupportedEncodingException;
-import java.nio.ByteBuffer;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.SortedSet;
-import java.util.TreeSet;
-
-import org.apache.cassandra.thrift.Cassandra;
-import org.apache.cassandra.thrift.Column;
-import org.apache.cassandra.thrift.ColumnParent;
 
 import backtype.storm.task.TopologyContext;
 import backtype.storm.topology.BasicOutputCollector;
 import backtype.storm.topology.OutputFieldsDeclarer;
 import backtype.storm.topology.base.BaseBasicBolt;
+import backtype.storm.tuple.Fields;
 import backtype.storm.tuple.Tuple;
-import edu.nyu.Connector;
+import backtype.storm.tuple.Values;
 
 public class WordCounter extends BaseBasicBolt {
 
 	private static final long serialVersionUID = 5968327715395972088L;
-	private static Cassandra.Client client;
-	private static Connector connector;
 
 	Integer id;
 	String name;
@@ -59,15 +45,13 @@ public class WordCounter extends BaseBasicBolt {
 	}
 
 	@Override
-	public void declareOutputFields(OutputFieldsDeclarer declarer) {}
+	public void declareOutputFields(OutputFieldsDeclarer declarer) {
+		declarer.declare(new Fields("wordCountsMap"));
+	}
 
 
 	@Override
 	public void execute(Tuple input, BasicOutputCollector collector) {
-
-		if(counters.size() > WORDS_WRITE_BATCH_SIZE){
-			writeToCassandra();
-		}
 
 		String str = input.getString(0);
 		/**
@@ -80,58 +64,14 @@ public class WordCounter extends BaseBasicBolt {
 			int c = counters.get(str) + 1;
 			counters.put(str, c);
 		}
-	}
-
-	private void writeToCassandra(){
-		connector = new Connector();
-		try {
-			client = connector.connect();
-
-			SortedSet<Map.Entry<String, Integer>> sortedCounter = 
-					new TreeSet<Map.Entry<String, Integer>>(new Comparator<Map.Entry<String, Integer>>() {
-						@Override
-						public int compare(Entry<String, Integer> o1,
-								Entry<String, Integer> o2) {
-							return o2.getValue().compareTo(o1.getValue()); //enforce descending
-						}
-					});
-
-			sortedCounter.addAll(counters.entrySet());
-
-			long timestamp = System.currentTimeMillis();
-			ColumnParent parent = new ColumnParent("wordCount");
-
-			int count=0; 
-
-			for(Map.Entry<String, Integer> entry : sortedCounter){
-				if(count < TOP_WORDS_COUNT) count++;
-				else break;
-
-				Column idColumn;
-				try {
-					idColumn = new Column(toByteBuffer(entry.getKey()));
-					idColumn.setValue(toByteBuffer(entry.getValue().toString()));
-					idColumn.setTimestamp(timestamp);
-					client.insert(toByteBuffer(timestamp+""), parent, idColumn, CL);
-//					System.out.println(entry.getKey()+"->"+entry.getValue());
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-			sortedCounter = null;
-			counters.clear();
-			System.out.println("Batch Written");
-		} catch (Exception e1) {
-			e1.printStackTrace();
+		
+		if(counters.size() > WORDS_WRITE_BATCH_SIZE){
+			collector.emit(new Values(counters));
+			counters = new HashMap<String, Integer>();
 		}
+
+		
 	}
 
-	public static ByteBuffer toByteBuffer(String value) throws UnsupportedEncodingException{
-		//		return ByteBufferUtil.bytes(value);
-		return ByteBuffer.wrap(value.getBytes(UTF8));
-	}
-
-	//	public static ByteBuffer toByteBuffer(long value) throws UnsupportedEncodingException{
-	//		return ByteBufferUtil.bytes(value);
-	//	}
+	
 }

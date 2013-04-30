@@ -11,6 +11,7 @@ import backtype.storm.tuple.Fields;
 import edu.nyu.storm.bolts.ExtractNoiseWords;
 import edu.nyu.storm.bolts.TokenExtractor;
 import edu.nyu.storm.bolts.WordCounter;
+import edu.nyu.storm.bolts.WriteToCassandra;
 import edu.nyu.storm.spouts.TwitterSpout;
 
 public class PrintStream {        
@@ -22,10 +23,12 @@ public class PrintStream {
         builder.setBolt("tokenExtractor", new TokenExtractor())
         	.shuffleGrouping("spout");
         builder.setBolt("noiseFilter", new ExtractNoiseWords())
-    	.shuffleGrouping("tokenExtractor");
-        WordCounter count = new WordCounter();
-        builder.setBolt("wordCounter", count,1)
-		.fieldsGrouping("noiseFilter", new Fields("filteredToken")); 
+    		.shuffleGrouping("tokenExtractor");
+        builder.setBolt("wordCounter", new WordCounter(), 1)
+			.fieldsGrouping("noiseFilter", new Fields("filteredToken")); 
+        builder.setBolt("cassandraWriter", new WriteToCassandra(), 5)
+			.shuffleGrouping("wordCounter");
+        
 //        builder.setBolt("print", new PrinterBolt())
  //   	.shuffleGrouping("noiseFilter");
 	
