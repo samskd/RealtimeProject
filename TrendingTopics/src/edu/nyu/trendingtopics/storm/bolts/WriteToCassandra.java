@@ -102,6 +102,7 @@ public class WriteToCassandra extends BaseBasicBolt {
 				}
 				
 				System.out.println("Batch "+_batchNumber+" Written");
+				_batchNumber++;
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}finally{
