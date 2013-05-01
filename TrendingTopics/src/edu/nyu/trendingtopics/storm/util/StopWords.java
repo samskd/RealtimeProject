@@ -1,4 +1,4 @@
-package edu.nyu.trendingtopics.util;
+package edu.nyu.trendingtopics.storm.util;
 
 import java.io.FileReader;
 import java.util.HashSet;

@@ -1,4 +1,4 @@
-package edu.nyu.trendingtopics.util;
+package edu.nyu.trendingtopics.storm.util;
 
 import org.junit.Assert;
 import org.junit.Test;

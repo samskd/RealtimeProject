@@ -8,7 +8,7 @@ import backtype.storm.topology.base.BaseBasicBolt;
 import backtype.storm.tuple.Fields;
 import backtype.storm.tuple.Tuple;
 import backtype.storm.tuple.Values;
-import edu.nyu.trendingtopics.util.Tokenizer;
+import edu.nyu.trendingtopics.storm.util.Tokenizer;
 
 /**
  * Storm bolt that tokenizes the text of tweet into tokens. It uses the {@link Tokenizer} 

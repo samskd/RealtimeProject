@@ -1,6 +1,6 @@
 package edu.nyu.trendingtopics.storm.bolts;
 
-import edu.nyu.trendingtopics.util.StopWords;
+import edu.nyu.trendingtopics.storm.util.StopWords;
 import backtype.storm.topology.BasicOutputCollector;
 import backtype.storm.topology.OutputFieldsDeclarer;
 import backtype.storm.topology.base.BaseBasicBolt;

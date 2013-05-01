@@ -1,4 +1,4 @@
-package edu.nyu.trendingtopics.util;
+package edu.nyu.trendingtopics.storm.util;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
-import edu.nyu.trendingtopics.util.Tokenizer;
+import edu.nyu.trendingtopics.storm.util.Tokenizer;
 
 public class TokensTest {
 

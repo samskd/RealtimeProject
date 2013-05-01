@@ -1,10 +1,10 @@
-package edu.nyu.trendingtopics.util;
+package edu.nyu.trendingtopics.storm.util;
 
 import junit.framework.Assert;
 
 import org.junit.Test;
 
-import edu.nyu.trendingtopics.util.StopWords;
+import edu.nyu.trendingtopics.storm.util.StopWords;
 
 public class StopwordsTest {
 
