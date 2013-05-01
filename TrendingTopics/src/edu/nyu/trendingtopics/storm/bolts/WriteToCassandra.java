@@ -32,7 +32,8 @@ public class WriteToCassandra extends BaseBasicBolt {
 	
 
 		private static final long serialVersionUID = 5168687340899971753L;
-
+		private long _batchNumber = 1;
+		
 		/**
 		 * Writes the map containing words and its count to Cassandra.
 		 * 
@@ -100,7 +101,7 @@ public class WriteToCassandra extends BaseBasicBolt {
 					}
 				}
 				
-				System.out.println("Batch Written");
+				System.out.println("Batch "+_batchNumber+" Written");
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}finally{
