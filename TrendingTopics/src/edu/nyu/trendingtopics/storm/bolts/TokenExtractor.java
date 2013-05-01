@@ -31,7 +31,7 @@ public class TokenExtractor extends BaseBasicBolt {
 	@Override
     public void execute(Tuple tuple, BasicOutputCollector collector) {
 		Status tweet = (Status) tuple.getValueByField("tweet");
-		
+
 		List<String> tweetTokens = parseKeywords(tweet.getText());
 		for(String token : tweetTokens)	{
 			collector.emit(new Values(token));

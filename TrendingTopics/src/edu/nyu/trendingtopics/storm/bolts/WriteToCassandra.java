@@ -66,15 +66,11 @@ public class WriteToCassandra extends BaseBasicBolt {
 			Connector connector = new Connector();
 			try {
 				Client client = connector.connect();
-
+				
 				//creates a sorted map based on the count.
 				ValueComparator comparator = new ValueComparator(counters);
 				SortedMap<String, Integer> sortedCounter = new TreeMap<String, Integer>(comparator);
 				sortedCounter.putAll(counters);
-				
-				//free the memory
-				counters.clear();
-				counters = null;
 				
 				long timestamp = System.currentTimeMillis();
 				ColumnParent parent = new ColumnParent("wordCount");
@@ -99,7 +95,6 @@ public class WriteToCassandra extends BaseBasicBolt {
 						
 						//insert the column to cassandra with row key as current timestamp
 						client.insert(toByteBuffer(timestamp+""), parent, idColumn, CL);
-
 					} catch (Exception e) {
 						e.printStackTrace();
 					}

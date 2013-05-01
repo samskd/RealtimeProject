@@ -38,7 +38,7 @@ public class FilterNoiseWords extends BaseBasicBolt{
 				tweetToken.length() < 15 &&
 				!tweetToken.matches(nonWords) && 
 				tweetToken.matches(englishWords) && 
-				StopWords.isStopWord(tweetToken))
+				!StopWords.isStopWord(tweetToken))
 			collector.emit(new Values(tweetToken));
 		
 	}

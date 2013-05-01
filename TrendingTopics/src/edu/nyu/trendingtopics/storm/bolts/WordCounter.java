@@ -33,7 +33,7 @@ public class WordCounter extends BaseBasicBolt {
 	 * This will be called only once at startup.
 	 * 
 	 * @param stormConf Storm Configuration.
-	 * @param context Context of Strom Topology
+	 * @param context Context of Storm Topology
 	 */
 	@SuppressWarnings("rawtypes")
 	@Override
