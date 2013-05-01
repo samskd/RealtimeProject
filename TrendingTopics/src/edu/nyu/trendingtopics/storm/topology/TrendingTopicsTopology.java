@@ -38,7 +38,7 @@ public class TrendingTopicsTopology {
 		.fieldsGrouping("noiseFilter", new Fields("filteredToken")); 
 		
 		builder.setBolt("cassandraWriter", new WriteToCassandra(), 5)
-		.shuffleGrouping("wordCounter");
+		.fieldsGrouping("wordCounter", new Fields("wordCountsMap"));
 
 		return builder.createTopology();
 	}

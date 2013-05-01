@@ -20,6 +20,7 @@ import backtype.storm.topology.OutputFieldsDeclarer;
 import backtype.storm.topology.base.BaseBasicBolt;
 import backtype.storm.tuple.Tuple;
 import edu.nyu.trendingtopics.storm.Connector;
+import edu.nyu.trendingtopics.storm.util.Util;
 
 /**
  * Storm bolt that writes the word count data to Cassandra. It writes only 
@@ -32,7 +33,6 @@ public class WriteToCassandra extends BaseBasicBolt {
 	
 
 		private static final long serialVersionUID = 5168687340899971753L;
-		private long _batchNumber = 1;
 		
 		/**
 		 * Writes the map containing words and its count to Cassandra.
@@ -101,8 +101,7 @@ public class WriteToCassandra extends BaseBasicBolt {
 					}
 				}
 				
-				System.out.println("Batch "+_batchNumber+" Written");
-				_batchNumber++;
+				System.out.println("Batch "+Util.getNextBatchNumber()+" Written");
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}finally{
