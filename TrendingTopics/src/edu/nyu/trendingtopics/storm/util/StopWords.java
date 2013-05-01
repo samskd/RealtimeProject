@@ -71,6 +71,8 @@ public class StopWords {
 	 * */
 	private static synchronized void populateStopWords(){
 
+		if(stopWordsCharArraySet != null) return;
+		
 		Set<String> stopWords = new HashSet<String>();
 
 		Scanner scanner = null;
