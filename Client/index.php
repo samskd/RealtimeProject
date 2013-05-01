@@ -13,7 +13,7 @@
 	<div role="main">
 		<div id="wordCountCloud" class="wordcloud">
 			<?php
-				$window = 1; //1 min default
+				$window = 1/6; //10 sec default
 				if(isset($_GET['window'])){
 					$window = $_GET['window'];
 				}
