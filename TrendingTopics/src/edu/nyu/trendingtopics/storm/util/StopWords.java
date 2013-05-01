@@ -22,7 +22,6 @@ public class StopWords {
 
 	private static CharArraySet stopWordsCharArraySet = null;
 	private static String stopWordsFile = "files/stopwords";
-	private static boolean useLuceneStopWords = true;
 	private static Lock lock = new ReentrantLock();
 
 	/**
@@ -51,9 +50,14 @@ public class StopWords {
 	/**
 	 * Returns the set containing all the stopwords.
 	 * 
+	 * @param fromLucene Specify whether to get the stopwords list from lucene
+	 * 
 	 * @return Set of stopwords.
 	 * */
-	public static synchronized CharArraySet getStopWordSet(){
+	public static synchronized CharArraySet getStopWordSet(boolean fromLucene){
+		if(fromLucene)
+			return StopAnalyzer.ENGLISH_STOP_WORDS_SET;
+		
 		if(stopWordsCharArraySet == null)
 			populateStopWords();
 
@@ -66,11 +70,6 @@ public class StopWords {
 	 * This method is Thread-safe
 	 * */
 	private static synchronized void populateStopWords(){
-
-		if(useLuceneStopWords){
-			stopWordsCharArraySet = StopAnalyzer.ENGLISH_STOP_WORDS_SET;
-			return;
-		}
 
 		Set<String> stopWords = new HashSet<String>();
 
