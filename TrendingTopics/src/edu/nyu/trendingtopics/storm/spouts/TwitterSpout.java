@@ -20,6 +20,12 @@ import backtype.storm.tuple.Fields;
 import backtype.storm.tuple.Values;
 import backtype.storm.utils.Utils;
 
+/**
+ * Storm spout that implements the Twitter Streaming API. This class is the acts as stream of tweets
+ * for storm topology. It uses the twitter4j API for receiving tweets from twitter in realtime. 
+ * 
+ * @author samitpatel
+ * */
 public class TwitterSpout extends BaseRichSpout {
    
 	private static final long serialVersionUID = -533293563080645627L;
@@ -58,15 +64,14 @@ public class TwitterSpout extends BaseRichSpout {
 
 			@Override
 			public void onStallWarning(StallWarning arg0) {
-				// TODO Auto-generated method stub
-				
 			}
             
         };
+        
         TwitterStreamFactory fact = new TwitterStreamFactory(new ConfigurationBuilder().build());
         _twitterStream = fact.getInstance();
         _twitterStream.addListener(listener);
-        _twitterStream.sample();
+        _twitterStream.sample(); //starts the twitter stream
     }
 
     @Override
@@ -87,7 +92,7 @@ public class TwitterSpout extends BaseRichSpout {
     @Override
     public Map<String, Object> getComponentConfiguration() {
         Config ret = new Config();
-        ret.setMaxTaskParallelism(1);
+        ret.setMaxTaskParallelism(3);
         return ret;
     }    
 

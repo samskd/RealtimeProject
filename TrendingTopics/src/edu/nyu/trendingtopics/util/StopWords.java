@@ -13,32 +13,39 @@ import org.apache.lucene.util.Version;
 
 
 /**
- * This class holds the list of stopwords. It populates the words from the file.
+ * This class holds the list of stopwords. It populates the words from the file or 
+ * it uses the stopwords set defined by lucene.
+ * 
  * @author samitpatel
  * */
 public class StopWords {
 
 	private static CharArraySet stopWordsCharArraySet = null;
 	private static String stopWordsFile = "files/stopwords";
-	private static boolean useLuceneStopWords = false;
+	private static boolean useLuceneStopWords = true;
 	private static Lock lock = new ReentrantLock();
-	
+
 	/**
-	 * Checks whether the word is a stopword.
+	 * Checks whether the word is a stopword. This method is thread safe.
 	 * 
 	 * @param word Word to be checked.
 	 * 
 	 *@return Returns <code>True</code> if word is stopword, otherwise <code>False</code>.
 	 * */
 	public static boolean isStopWord(String word){
-		if(stopWordsCharArraySet == null)
-			populateStopWords();
-		
-		lock.tryLock();
-		boolean contains = stopWordsCharArraySet.contains(word);
-		lock.unlock();
-		
-		return contains;
+		try{
+			if(stopWordsCharArraySet == null)
+				populateStopWords();
+
+			lock.tryLock();
+			return stopWordsCharArraySet.contains(word);
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			lock.unlock();
+		}
+		return false;
 	}
 
 	/**
@@ -55,7 +62,8 @@ public class StopWords {
 
 
 	/**
-	 * Private method that lazily populates the stopwords from the file.
+	 * Private method that lazily populates the stopwords from the file. 
+	 * This method is Thread-safe
 	 * */
 	private static synchronized void populateStopWords(){
 
@@ -63,7 +71,7 @@ public class StopWords {
 			stopWordsCharArraySet = StopAnalyzer.ENGLISH_STOP_WORDS_SET;
 			return;
 		}
-		
+
 		Set<String> stopWords = new HashSet<String>();
 
 		Scanner scanner = null;
@@ -76,6 +84,7 @@ public class StopWords {
 			//ignores te empty line or the one that starts with '#'
 			while(scanner.hasNextLine()){
 				String word = scanner.nextLine();
+				//ignores the comments in the stopwords file that start with '#'.
 				if(word.isEmpty() || word.startsWith("#")) continue;
 				String[] words = word.trim().split("\\s+");
 				for(String w : words)
@@ -92,7 +101,7 @@ public class StopWords {
 				e.printStackTrace();
 			}
 		}
-		
+
 		stopWordsCharArraySet = new CharArraySet(Version.LUCENE_42, stopWords, true);
 	}
 }

@@ -19,7 +19,7 @@ import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.util.Version;
 
 /**
- * Tokenizes the text into token by applying few filter in the process. It filters the token
+ * Tokenizes the text into tokens by applying few filter in the process. It filters the token
  * based on {@link StandardFilter}, {@link EnglishPossessiveFilter}, {@link LowerCaseFilter},
  * {@link StopFilter}, {@link KeywordMarkerFilter} and {@link PorterStemFilter}.
  * 
@@ -33,7 +33,8 @@ public class Tokenizer implements Serializable{
 	private static final Analyzer analyzer  = new EnglishAnalyzer(Version.LUCENE_42, StopWords.getStopWordSet());
 
 	/**
-	 * Tokenizes the text into token by applying the filters.
+	 * Tokenizes the text into tokens using lucene's {@link EnglishAnalyzer}.
+	 * 
 	 * @param text Text to tokenize.
 	 * @return Returns the list of tokens.
 	 * */
@@ -42,9 +43,11 @@ public class Tokenizer implements Serializable{
 		TokenStream stream  = null;
 		
 		try{
+			//get a stream of tokens.
 			stream = analyzer.tokenStream("tweetcontent", new StringReader(text));
 			stream.reset();
 			
+			//loops over each tokens and add it to the list.
 			CharTermAttribute termAttribute = stream.addAttribute(CharTermAttribute.class);
 			while(stream.incrementToken()) {
 				String term = termAttribute.toString();
