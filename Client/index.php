@@ -15,8 +15,9 @@
 			<?php
 				$window = 1/6; //10 sec default
 				if(isset($_GET['window'])){
-					$window = $_GET['window'];
+					$window = urldecode($_GET['window']);
 				}
+				
 				$response = file_get_contents("http://localhost:1337/?window=$window");
 				
 				if($response){
